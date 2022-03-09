@@ -28,7 +28,7 @@ public interface IGameBoard {
     default boolean checkIfFree(int c){
         BoardPosition pos = new BoardPosition(0, c);
         //checks top row
-        if(whatsAtPos(pos) ==  ' ') {
+        if(whatsAtPos(pos) !=  ' ') {
             return true;
         }
         return false;
@@ -51,12 +51,14 @@ public interface IGameBoard {
         char p = ' ';
         //until we found the last found piece
         for(int i = 0; i < MAX_ROW; i++){
-            BoardPosition pos = new BoardPosition(0, c);
+            BoardPosition pos = new BoardPosition(i, c);
             p = whatsAtPos(pos);
             if(p != ' '){
                 row = i;
+                break;
             }
         }
+
         //pos we will be using in all checks
         BoardPosition pos = new BoardPosition(row, c);
         //check win condition

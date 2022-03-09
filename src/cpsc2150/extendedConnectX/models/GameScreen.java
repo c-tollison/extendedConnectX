@@ -18,22 +18,30 @@ public class GameScreen {
         while(gameState){
             System.out.println(board.toString());
             while(!valid) {
-                System.out.println("Player" + player[counter % 2] + "what column do you want to place your marker in?");
+                System.out.println("Player " + player[counter % 2] + " what column do you want to place your marker in?");
                 scan = scanner.nextLine();
                 userInput = Integer.parseInt(scan);
                 valid = checkPlayerInput(userInput);
-                //check if column is full
-                if(board.checkIfFree(userInput)){
+                //check if column is full if valid input
+                if(valid && board.checkIfFree(userInput)){
                     System.out.println("Column is full");
+                    valid = false;
                 }
             }
             //set valid back to false
             valid = false;
             board.placeToken(player[counter % 2], userInput);
             if(board.checkForWin(userInput)) {
-                System.out.println("Player" + player[counter % 2] + "Won!");
+                System.out.println("Player " + player[counter % 2] + " Won!");
                 counter = -1;
                 gameState = playAgain();
+                board = new GameBoard();
+            }
+            else if(board.checkTie()){
+                System.out.println("It was a tie!");
+                counter = -1;
+                gameState = playAgain();
+                board = new GameBoard();
             }
             counter++;
         }
@@ -50,7 +58,12 @@ public class GameScreen {
      */
     public static boolean checkPlayerInput(int column){
         //checks columns
-        if(column < 0 || column >= board.MAX_COLUMN) {
+        if(column < 0 ){
+            System.out.println("Column cannot be less than 0");
+            return false;
+        }
+        else if(column >= board.MAX_COLUMN) {
+            System.out.println("Column cannot be greater than " + (board.MAX_COLUMN - 1));
             return false;
         }
         return true;
