@@ -7,11 +7,14 @@ package cpsc2150.extendedConnectX.models;
  * @invariant (0 <= row < MAX_ROW) and (0 <= column < MAX_COLUMN)
  * @invariant char needs to be 'X' or 'O'
  * @invariant No gaps between tokens in each column on the board
- * @correspondence Structure = board
  * @correspondence self = [board of characters used by the players]
+ * @correspondence Structure = board[MAX_ROW][MAX_COLUMN]
  */
 public class GameBoard extends AbsGameBoard implements IGameBoard{
 
+    private static final int MAX_ROW = 6;
+    private static final int MAX_COLUMN = 9;
+    private static final int NUM_TO_WIN = 5;
     private char [][] board;
 
     /**

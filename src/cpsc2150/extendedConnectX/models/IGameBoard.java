@@ -5,18 +5,17 @@ package cpsc2150.extendedConnectX.models;
  * This is a gameboard for connectX
  * The gameboard is bounded by MAX_ROW and MAX_COLUMN
  * Initialization ensures:
- *      IGameBoard size is [MAX_ROW] by [MAX_COLUMN]
+ *      There are no gaps in each column between placed markers
+ *      iGameBoard size is [MAX_ROW] by [MAX_COLUMN]
+ *      initialized by empty spaces
  * Constraints:
- *     every position needs to be inbetween 0 <= row < MAX_ROW
+ *     every position needs to be between 0 <= row < MAX_ROW
  *     AND  0 <= column < MAX_COLUMN
+ *
  */
 public interface IGameBoard {
 
-    static final int MAX_ROW = 6;
-    static final int MAX_COLUMN = 9;
-    static final int NUM_TO_WIN = 5;
-
-    /**
+     /**
      * returns true if the column can accept another token; false otherwise.
      * @param c is an int with the column the token is to be placed in
      * @return a boolean if the column is free or exists
@@ -50,7 +49,7 @@ public interface IGameBoard {
         int row = 0;
         char p = ' ';
         //until we found the last found piece
-        for(int i = 0; i < MAX_ROW; i++){
+        for(int i = 0; i < getNumRows(); i++){
             BoardPosition pos = new BoardPosition(i, c);
             p = whatsAtPos(pos);
             if(p != ' '){
@@ -82,7 +81,7 @@ public interface IGameBoard {
      */
     default boolean checkTie(){
         //check if any more placements possible in top row
-        for(int i = 0; i < MAX_COLUMN; i++){
+        for(int i = 0; i < getNumColumns(); i++){
             BoardPosition pos = new BoardPosition(0,i);
             //if blank space then no tie
             if(whatsAtPos(pos) == ' '){
@@ -112,12 +111,12 @@ public interface IGameBoard {
         int counter = 0;
         int row = pos.getRow();
         //go through this row
-        for(int i = 0; i < MAX_COLUMN; i++){
+        for(int i = 0; i < getNumColumns(); i++){
             //count if match up to 5
             BoardPosition newPos = new BoardPosition(row, i);
             if(isPlayerAtPos(newPos, p)){
                 counter++;
-                if(counter == NUM_TO_WIN){
+                if(counter == getNumToWin()){
                     return true;
                 }
             }
@@ -148,12 +147,12 @@ public interface IGameBoard {
         int counter = 0;
         int column = pos.getColumn();
         //go through this column
-        for(int i = MAX_ROW - 1; i >= 0; i--){
+        for(int i = getNumRows() - 1; i >= 0; i--){
             //count if match up to 5
             BoardPosition newPos = new BoardPosition(i, column);
             if(isPlayerAtPos(newPos, p)){
                 counter++;
-                if(counter == NUM_TO_WIN){
+                if(counter == getNumToWin()){
                     return true;
                 }
             }
@@ -184,18 +183,18 @@ public interface IGameBoard {
     default boolean checkDiagWin(BoardPosition pos, char p){
         int counter = 0;
         //start from bottom and go left
-        int offset = MAX_ROW - pos.getRow();
+        int offset = (getNumRows() - 1) - pos.getRow();
         int right_x = pos.getRow() + offset;
         int right_y = pos.getColumn() - offset;
         int left_x = pos.getRow() + offset;
         int left_y = pos.getColumn() + offset;
 
         //move right
-        while(right_x >= 0 && right_x <  MAX_ROW && right_y >= 0 && right_y < MAX_COLUMN){
+        while(right_x >= 0 && right_x <  getNumRows() && right_y >= 0 && right_y < getNumColumns()){
             BoardPosition newPos = new BoardPosition(right_x, right_y);
             if(isPlayerAtPos(newPos, p)){
                 counter++;
-                if(counter == NUM_TO_WIN){
+                if(counter == getNumToWin()){
                     return true;
                 }
             }
@@ -205,13 +204,13 @@ public interface IGameBoard {
             right_x--;
             right_y++;
         }
-
+        counter = 0;
         //move left
-        while(left_x >= 0 && left_x <  MAX_ROW && left_y >= 0 && left_y < MAX_COLUMN){
+        while(left_x >= 0 && left_x <  getNumRows() && left_y >= 0 && left_y < getNumColumns()){
             BoardPosition newPos = new BoardPosition(left_x, left_y);
             if(isPlayerAtPos(newPos, p)){
                 counter++;
-                if(counter == NUM_TO_WIN){
+                if(counter == getNumToWin()){
                     return true;
                 }
             }
@@ -273,6 +272,7 @@ public interface IGameBoard {
      * returns the max number of rows in the gameboard
      * @return number of rows
      * @post self = #self
+     * getNumRows = MAX_ROW
      */
     public int getNumRows();
 
@@ -280,6 +280,7 @@ public interface IGameBoard {
      * returns the max number of columns in the gameboard
      * @return number of columns
      * @post self = #self
+     * getNumColumns = MAX_COLUMN
      */
     public int getNumColumns();
 
@@ -287,6 +288,7 @@ public interface IGameBoard {
      * returns the number of tokens in a row needed to win the game
      * @return number of tokens needed to win
      * @post self = #self
+     * getNumToWin = NUM_TO_WIN
      */
     public int getNumToWin();
 }

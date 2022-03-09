@@ -15,8 +15,8 @@ public class GameScreen {
         int userInput = 0;
 
         //game loop
+        System.out.println(board.toString());
         while(gameState){
-            System.out.println(board.toString());
             while(!valid) {
                 System.out.println("Player " + player[counter % 2] + " what column do you want to place your marker in?");
                 scan = scanner.nextLine();
@@ -31,17 +31,16 @@ public class GameScreen {
             //set valid back to false
             valid = false;
             board.placeToken(player[counter % 2], userInput);
+            System.out.println(board.toString());
             if(board.checkForWin(userInput)) {
                 System.out.println("Player " + player[counter % 2] + " Won!");
                 counter = -1;
                 gameState = playAgain();
-                board = new GameBoard();
             }
             else if(board.checkTie()){
                 System.out.println("It was a tie!");
                 counter = -1;
                 gameState = playAgain();
-                board = new GameBoard();
             }
             counter++;
         }
@@ -62,8 +61,8 @@ public class GameScreen {
             System.out.println("Column cannot be less than 0");
             return false;
         }
-        else if(column >= board.MAX_COLUMN) {
-            System.out.println("Column cannot be greater than " + (board.MAX_COLUMN - 1));
+        else if(column >= board.getNumColumns()){
+            System.out.println("Column cannot be greater than " + (board.getNumColumns() - 1));
             return false;
         }
         return true;
@@ -88,6 +87,8 @@ public class GameScreen {
         }
         //checks input
         if(user == 'Y' || user == 'y'){
+            board = new GameBoard();
+            System.out.println(board.toString());
             return true;
         }
         return false;

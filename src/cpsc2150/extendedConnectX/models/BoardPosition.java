@@ -9,8 +9,8 @@ package cpsc2150.extendedConnectX.models;
  * @invariant (0 <= row <= MAX_ROW) and (0 <= column <= MAX_COLUMN)
  */
 public class BoardPosition {
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
 
     /**
      * This is the constructor for the BoardPosition class.
@@ -78,8 +78,6 @@ public class BoardPosition {
      */
     @Override
     public String toString() {
-        String position = "<" + row + "," + column + ">";
-        return position;
+        return "<" + row + "," + column + ">";
     }
-
 }
