@@ -27,10 +27,7 @@ public interface IGameBoard {
     default boolean checkIfFree(int c){
         BoardPosition pos = new BoardPosition(0, c);
         //checks top row
-        if(whatsAtPos(pos) !=  ' ') {
-            return true;
-        }
-        return false;
+        return whatsAtPos(pos) != ' ';
     }
 
     /**
@@ -61,11 +58,7 @@ public interface IGameBoard {
         //pos we will be using in all checks
         BoardPosition pos = new BoardPosition(row, c);
         //check win condition
-        if (checkHorizWin(pos, p) || checkVertWin(pos, p) || checkDiagWin(pos, p)) {
-            return true;
-        }
-
-        return false;
+        return checkHorizWin(pos, p) || checkVertWin(pos, p) || checkDiagWin(pos, p);
     }
 
     /**
@@ -190,35 +183,41 @@ public interface IGameBoard {
         int left_y = pos.getColumn() + offset;
 
         //move right
-        while(right_x >= 0 && right_x <  getNumRows() && right_y >= 0 && right_y < getNumColumns()){
-            BoardPosition newPos = new BoardPosition(right_x, right_y);
-            if(isPlayerAtPos(newPos, p)){
-                counter++;
-                if(counter == getNumToWin()){
-                    return true;
+        int step = 0;
+        while(step < 6){
+            if(right_x >= 0 && right_x <  getNumRows() && right_y >= 0 && right_y < getNumColumns()) {
+                BoardPosition newPos = new BoardPosition(right_x, right_y);
+                if (isPlayerAtPos(newPos, p)) {
+                    counter++;
+                    if (counter == getNumToWin()) {
+                        return true;
+                    }
+                } else {
+                    counter = 0;
                 }
-            }
-            else {
-                counter = 0;
             }
             right_x--;
             right_y++;
+            step++;
         }
         counter = 0;
+        step = 0;
         //move left
-        while(left_x >= 0 && left_x <  getNumRows() && left_y >= 0 && left_y < getNumColumns()){
-            BoardPosition newPos = new BoardPosition(left_x, left_y);
-            if(isPlayerAtPos(newPos, p)){
-                counter++;
-                if(counter == getNumToWin()){
-                    return true;
+        while(step < 6){
+            if(left_x >= 0 && left_x <  getNumRows() && left_y >= 0 && left_y < getNumColumns()) {
+                BoardPosition newPos = new BoardPosition(left_x, left_y);
+                if (isPlayerAtPos(newPos, p)) {
+                    counter++;
+                    if (counter == getNumToWin()) {
+                        return true;
+                    }
+                } else {
+                    counter = 0;
                 }
-            }
-            else {
-                counter = 0;
             }
             left_x--;
             left_y--;
+            step++;
         }
 
         //no match
@@ -237,10 +236,7 @@ public interface IGameBoard {
      * theBoard = #theBoard
      */
     default boolean isPlayerAtPos(BoardPosition pos, char player){
-        if(whatsAtPos(pos) == player){
-            return true;
-        }
-        return false;
+        return whatsAtPos(pos) == player;
     }
 
     /**
@@ -254,7 +250,7 @@ public interface IGameBoard {
      * @post p is placed into the correct c and is placed at the bottom of the row.
      * No other column or row is affected by the change
      */
-    public void placeToken(char p, int c);
+    void placeToken(char p, int c);
 
     /**
      * returns what is in the GameBoard at position pos
@@ -266,7 +262,7 @@ public interface IGameBoard {
      * returned with correct value at pos
      * theBoard = #theBoard
      */
-    public char whatsAtPos(BoardPosition pos);
+    char whatsAtPos(BoardPosition pos);
 
     /**
      * returns the max number of rows in the gameboard
@@ -274,7 +270,7 @@ public interface IGameBoard {
      * @post self = #self
      * getNumRows = MAX_ROW
      */
-    public int getNumRows();
+    int getNumRows();
 
     /**
      * returns the max number of columns in the gameboard
@@ -282,7 +278,7 @@ public interface IGameBoard {
      * @post self = #self
      * getNumColumns = MAX_COLUMN
      */
-    public int getNumColumns();
+    int getNumColumns();
 
     /**
      * returns the number of tokens in a row needed to win the game
@@ -290,5 +286,5 @@ public interface IGameBoard {
      * @post self = #self
      * getNumToWin = NUM_TO_WIN
      */
-    public int getNumToWin();
+    int getNumToWin();
 }

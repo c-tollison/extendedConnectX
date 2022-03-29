@@ -15,7 +15,6 @@ public class BoardPosition {
     /**
      * This is the constructor for the BoardPosition class.
      * Will initialize the current row and column position
-     * @return void
      * @param row is what we set #row to
      * @param column is what we set #column to
      * @pre
@@ -53,7 +52,7 @@ public class BoardPosition {
     /**
      * Checks to see if two BoardPositions are equal
      * @return boolean based on if BoardPositions are equal or not
-     * @param BP which is a board position
+     * @param obj which is a board position
      * @pre
      * BP.row >= 0
      * BP.column >= 0
@@ -63,11 +62,11 @@ public class BoardPosition {
      * equals = false iff ((BoardPosition.row == BP.row) && (BoardPosition.column != BP.column)
      * row and column do not change
      */
-    public boolean equals(BoardPosition BP) {
-        if(this.row == BP.getRow() && this.column == BP.getColumn()){
-            return true;
-        }
-        return false;
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass() != getClass()) return false;
+        BoardPosition BP = (BoardPosition) obj;
+        return this.row == BP.getRow() && this.column == BP.getColumn();
     }
 
     /**
@@ -78,6 +77,6 @@ public class BoardPosition {
      */
     @Override
     public String toString() {
-        return "<" + row + "," + column + ">";
+        return row + "," + column;
     }
 }
