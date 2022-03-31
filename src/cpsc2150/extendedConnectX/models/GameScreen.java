@@ -144,10 +144,10 @@ public class GameScreen {
             }
         }
 
-       // if(choice == 'F' || choice == 'f'){
+        if(choice == 'F' || choice == 'f'){
             return new GameBoard(rows, columns, numToWin);
-      //  }
-      //  else return new GameBoardMem(rows, columns, numToWin);
+        }
+        else return new GameBoardMem(rows, columns, numToWin);
 
     }
 
