@@ -5,28 +5,33 @@ package cpsc2150.extendedConnectX.models;
  * This class also checks for wins and this class will take in all user input.
  * @author Carson Tollison
  * @invariant (0 <= row < MAX_ROW) and (0 <= column < MAX_COLUMN)
- * @invariant char needs to be 'X' or 'O'
+ * @invariant Tokens can be any char but need to be uppercase if applicable
+ * @invariant numberToWin cannot be greater than the rows or columns
  * @invariant No gaps between tokens in each column on the board
  * @correspondence self = [board of characters used by the players]
  * @correspondence Structure = board[MAX_ROW][MAX_COLUMN]
  */
 public class GameBoard extends AbsGameBoard implements IGameBoard{
 
-    private static final int MAX_ROW = 6;
-    private static final int MAX_COLUMN = 9;
-    private static final int NUM_TO_WIN = 5;
-    private char [][] board;
+    private final int rows;
+    private final int columns;
+    private final int numberToWin;
+    private final char[][] board;
 
     /**
      * This is the constructor for the GameBoard class
      * @post board is initialized to [MAX_ROW][MAX_COLUMN]
      * All positions are set to a blank character
      */
-    public GameBoard() {
+    public GameBoard(int rows, int columns, int numberToWin) {
+        this.rows = rows;
+        this.columns = columns;
+        this.numberToWin = numberToWin;
+
         //initialize the board
-        board = new char[MAX_ROW][MAX_COLUMN];
-        for(int i = 0; i < MAX_ROW; i++) {
-            for(int j = 0; j < MAX_COLUMN; j++){
+        board = new char[rows][columns];
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++){
                 board[i][j] = ' ';
             }
         }
@@ -35,7 +40,7 @@ public class GameBoard extends AbsGameBoard implements IGameBoard{
     @Override
     public void placeToken(char p, int c) {
         //place a token by starting at bottom and moving up
-        for(int i = MAX_ROW - 1; i >= 0; i--){
+        for(int i = rows - 1; i >= 0; i--){
             //if blank then place and break
             if(board[i][c] == ' ') {
                 board[i][c] = p;
@@ -51,17 +56,17 @@ public class GameBoard extends AbsGameBoard implements IGameBoard{
 
     @Override
     public int getNumRows() {
-        return MAX_ROW;
+        return rows;
     }
 
     @Override
     public int getNumColumns() {
-        return MAX_COLUMN;
+        return columns;
     }
 
     @Override
     public int getNumToWin() {
-        return NUM_TO_WIN;
+        return numberToWin;
     }
 
 }

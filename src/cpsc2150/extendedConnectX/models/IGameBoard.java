@@ -6,15 +6,18 @@ package cpsc2150.extendedConnectX.models;
  * The gameboard is bounded by MAX_ROW and MAX_COLUMN
  * Initialization ensures:
  *      There are no gaps in each column between placed markers
- *      iGameBoard size is [MAX_ROW] by [MAX_COLUMN]
+ *      iGameBoard size is [rows] by [column]
  *      initialized by empty spaces
  * Constraints:
- *     every position needs to be between 0 <= row < MAX_ROW
- *     AND  0 <= column < MAX_COLUMN
+ *     every position needs to be between 0 <= row < rows
+ *     AND  0 <= column < columns
  *
  */
 public interface IGameBoard {
-
+    int MAX_COLUMN = 100;
+    int MAX_ROW = 100;
+    int MAX_NUM_TO_WIN = 25;
+    int MINIMUM = 3;
      /**
      * returns true if the column can accept another token; false otherwise.
      * @param c is an int with the column the token is to be placed in
@@ -184,7 +187,7 @@ public interface IGameBoard {
 
         //move right
         int step = 0;
-        while(step < 6){
+        while(step < getNumRows()){
             if(right_x >= 0 && right_x <  getNumRows() && right_y >= 0 && right_y < getNumColumns()) {
                 BoardPosition newPos = new BoardPosition(right_x, right_y);
                 if (isPlayerAtPos(newPos, p)) {
@@ -203,7 +206,7 @@ public interface IGameBoard {
         counter = 0;
         step = 0;
         //move left
-        while(step < 6){
+        while(step < getNumRows()){
             if(left_x >= 0 && left_x <  getNumRows() && left_y >= 0 && left_y < getNumColumns()) {
                 BoardPosition newPos = new BoardPosition(left_x, left_y);
                 if (isPlayerAtPos(newPos, p)) {
@@ -265,18 +268,18 @@ public interface IGameBoard {
     char whatsAtPos(BoardPosition pos);
 
     /**
-     * returns the max number of rows in the gameboard
+     * returns the number of rows in the gameboard
      * @return number of rows
      * @post self = #self
-     * getNumRows = MAX_ROW
+     * getNumRows = rows
      */
     int getNumRows();
 
     /**
-     * returns the max number of columns in the gameboard
+     * returns the number of columns in the gameboard
      * @return number of columns
      * @post self = #self
-     * getNumColumns = MAX_COLUMN
+     * getNumColumns = columns
      */
     int getNumColumns();
 
@@ -284,7 +287,8 @@ public interface IGameBoard {
      * returns the number of tokens in a row needed to win the game
      * @return number of tokens needed to win
      * @post self = #self
-     * getNumToWin = NUM_TO_WIN
+     * getNumToWin = numberToWin
      */
     int getNumToWin();
+
 }

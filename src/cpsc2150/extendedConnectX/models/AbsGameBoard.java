@@ -13,7 +13,10 @@ public abstract class AbsGameBoard implements IGameBoard{
         //create initial row with columns number
         String gameBoard = "|";
         for(int i = 0; i < getNumColumns(); i++){
-            gameBoard += i + "|";
+            if( i < 10) {
+                gameBoard += "" + ' ' + i + "|";
+            }
+            else gameBoard += i + "|";
         }
         gameBoard += "\n";
 
@@ -23,7 +26,7 @@ public abstract class AbsGameBoard implements IGameBoard{
             //each column print character and line
             for(int j = 0; j < getNumColumns(); j++){
                 BoardPosition pos = new BoardPosition(i,j);
-                gameBoard += whatsAtPos(pos) + "|";
+                gameBoard += whatsAtPos(pos) + " |";
             }
             gameBoard += "\n";
         }
