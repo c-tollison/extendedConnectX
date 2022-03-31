@@ -26,6 +26,9 @@ public class GameBoardMem extends AbsGameBoard implements IGameBoard{
     private final Map<Character, List<BoardPosition>> map;
     /**
      * This is the constructor for the GameBoard class
+     * @param rows = number of rows for game
+     * @param columns = number of columns for game
+     * @param numberToWin = number of tokens to win in a row
      * @post board is initialized to [MAX_ROW][MAX_COLUMN]
      * All positions are set to a blank character
      */
