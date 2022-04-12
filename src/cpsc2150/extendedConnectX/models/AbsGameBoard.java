@@ -21,7 +21,7 @@ public abstract class AbsGameBoard implements IGameBoard{
         gameBoard += "\n";
 
         //access using primary methods and print board
-        for(int i = 0; i < getNumRows(); i++){
+        for(int i = getNumRows() - 1; i >= 0; i--){
             gameBoard += "|";
             //each column print character and line
             for(int j = 0; j < getNumColumns(); j++){

@@ -47,7 +47,7 @@ public class GameBoardMem extends AbsGameBoard implements IGameBoard{
             map.put(p, new ArrayList<>());
         }
         //place a token by starting at bottom and moving up
-        for(int i = rows - 1; i >= 0; i--){
+        for(int i = 0; i < rows; i--){
             //if blank then place and break
             BoardPosition bp = new BoardPosition(i, c);
             char check = whatsAtPos(bp);

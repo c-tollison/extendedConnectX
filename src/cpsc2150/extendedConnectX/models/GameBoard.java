@@ -43,7 +43,7 @@ public class GameBoard extends AbsGameBoard implements IGameBoard{
     @Override
     public void placeToken(char p, int c) {
         //place a token by starting at bottom and moving up
-        for(int i = rows - 1; i >= 0; i--){
+        for(int i = 0; i < rows; i++){
             //if blank then place and break
             if(board[i][c] == ' ') {
                 board[i][c] = p;

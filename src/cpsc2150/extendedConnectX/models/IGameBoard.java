@@ -28,7 +28,7 @@ public interface IGameBoard {
      * gameBoard = #gameBoard
      */
     default boolean checkIfFree(int c){
-        BoardPosition pos = new BoardPosition(0, c);
+        BoardPosition pos = new BoardPosition(getNumRows() - 1, c);
         //checks top row
         return whatsAtPos(pos) != ' ';
     }
@@ -46,10 +46,10 @@ public interface IGameBoard {
      * theBoard = #theBoard
      */
     default boolean checkForWin(int c){
-        int row = 0;
+        int row = getNumRows() - 1;
         char p = ' ';
         //until we found the last found piece
-        for(int i = 0; i < getNumRows(); i++){
+        for(int i = row; i >= 0; i--){
             BoardPosition pos = new BoardPosition(i, c);
             p = whatsAtPos(pos);
             if(p != ' '){
@@ -78,7 +78,7 @@ public interface IGameBoard {
     default boolean checkTie(){
         //check if any more placements possible in top row
         for(int i = 0; i < getNumColumns(); i++){
-            BoardPosition pos = new BoardPosition(0,i);
+            BoardPosition pos = new BoardPosition(getNumRows() - 1, i);
             //if blank space then no tie
             if(whatsAtPos(pos) == ' '){
                 return false;
