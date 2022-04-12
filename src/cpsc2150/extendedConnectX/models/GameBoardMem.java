@@ -47,7 +47,7 @@ public class GameBoardMem extends AbsGameBoard implements IGameBoard{
             map.put(p, new ArrayList<>());
         }
         //place a token by starting at bottom and moving up
-        for(int i = 0; i < rows; i--){
+        for(int i = 0; i < rows; i++){
             //if blank then place and break
             BoardPosition bp = new BoardPosition(i, c);
             char check = whatsAtPos(bp);
@@ -77,15 +77,20 @@ public class GameBoardMem extends AbsGameBoard implements IGameBoard{
 
     @Override
     public boolean isPlayerAtPos(BoardPosition pos, char player){
-        //iterate through the list at that key
-        for(int i = 0; i < map.get(player).size(); i++){
-            //if the bp matches the one we are looking for then it exists
-            if(map.get(player).get(i).equals(pos)){
-                return true;
+        //check that player exists
+        if(map.containsKey(player)) {
+            //iterate through the list at that key
+            for (int i = 0; i < map.get(player).size(); i++) {
+                //if the bp matches the one we are looking for then it exists
+
+                if (map.get(player).get(i).equals(pos)) {
+                    return true;
+                }
             }
         }
-        //no value matched this value at this key
-        return false;
+        //no value matched this value at this key but return true if blank check
+        return player == ' ';
+
     }
 
     @Override
