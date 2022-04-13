@@ -552,7 +552,7 @@ public class TestGameBoard {
         expectedBoard[1][0] = 'O';
         expectedBoard[2][0] = 'X';
         //check to make sure diag win
-        assertTrue(gb.checkDiagWin(new BoardPosition(2,0), 'X'));
+        assertTrue(gb.checkDiagWin(new BoardPosition(0,2), 'X'));
         //compare boards
         assertEquals(toString(expectedBoard), gb.toString());
     }
@@ -626,7 +626,7 @@ public class TestGameBoard {
         expectedBoard[1][0] = 'O';
         expectedBoard[2][0] = 'X';
         //check to make sure diag win
-        assertTrue(gb.checkDiagWin(new BoardPosition(0,2), 'X'));
+        assertTrue(gb.checkDiagWin(new BoardPosition(2,0), 'X'));
         //compare boards
         assertEquals(toString(expectedBoard), gb.toString());
     }
@@ -1228,7 +1228,6 @@ public class TestGameBoard {
             }
         }
         //compare boards
-
         assertEquals(toString(expectedBoard), gb.toString());
     }
 
